@@ -46,7 +46,7 @@ An example is (change default paste with paste and indent):
         "key": "cmd+shift+v",
         "command": "editor.action.clipboardPasteAction",
         "when": "editorTextFocus && !editorReadonly"
-    },
+    }
 ]
 ```
 
