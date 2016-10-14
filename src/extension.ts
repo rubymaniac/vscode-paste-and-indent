@@ -44,7 +44,7 @@ let pasteAndIndent = () => {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-    context.subscriptions.push(vscode.commands.registerCommand('extension.pasteAndIndent', pasteAndIndent));
+    context.subscriptions.push(vscode.commands.registerCommand('pasteAndIndent.action', pasteAndIndent));
 }
 
 export function deactivate() {
