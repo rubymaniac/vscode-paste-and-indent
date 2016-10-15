@@ -26,16 +26,17 @@ let pasteAndIndent = () => {
 				xmin = _xmin;
 			}
 		});
+
+		if (!xmin || xmin === -1) {
+			return;
+		}
+
 		linesToIndent = linesToIndent.map((line, index) => {
 			let x = leadingSpaces[index];
 			if (index === 0) { // Remove first lines' leading space
 				return line.replace(/^\s*/, '');
 			}
-			if (xmin > -1) {
-				return line.replace(/^\s*/, indentChar.repeat(x - xmin + offset));
-			} else {
-				return line;
-			}
+			return line.replace(/^\s*/, indentChar.repeat(x - xmin + offset));
 		});
 		editor.edit((editBuilder: vscode.TextEditorEdit) => {
 			editBuilder.replace(selectionToIndent, linesToIndent.join('\n'));
