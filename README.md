@@ -60,7 +60,7 @@ An example is (change default paste with paste and indent):
 
 ## Limitations
 
-This plugin has limitations regarding the extent at what correct indentation can be performed.
+This plugin has limitations regarding the extent at which correct indentation can be performed.
 Problems arise when one tries to paste code with it's first line not on the same indentation level with the last.
 Fortunatelly this is not a usual case but if you find it doesn't work as you have expected then try
 enabling the setting: `pasteAndIndent.selectAfter`.
