@@ -43,11 +43,38 @@ An example is (change default paste with paste and indent):
         "when": "editorTextFocus && !editorReadonly"
     },
     {
+        "key": "cmd+v",
+        "command": "editor.action.clipboardPasteAction",
+        "when": "!editorTextFocus"
+    },
+    {
         "key": "cmd+shift+v",
         "command": "editor.action.clipboardPasteAction",
         "when": "editorTextFocus && !editorReadonly"
     }
 ]
+```
+
+**Note**: Reverted to the built-in command `editor.action.clipboardPasteAction` when the editor has lost focus (the case with `cmd+F` and then paste)
+
+
+## Limitations
+
+This plugin has limitations regarding the extent at what correct indentation can be performed.
+Problems arise when one tries to paste code with it's first line not on the same indentation level with the last.
+Fortunatelly this is not a usual case but if you find it doesn't work as you have expected then try
+enabling the setting: `pasteAndIndent.selectAfter`.
+
+What it does is that after trying to indent properly it selects the text with
+probably incorrect indentation so that you can easily hit `cmd+[` or `cmd+]`.
+
+In order to enable it you have to open your *User Settings* (hit `cmd+,`) or the *Workspace Settings* and there
+add:
+
+```json
+{
+    "pasteAndIndent.selectAfter": true
+}
 ```
 
 ## Contribute

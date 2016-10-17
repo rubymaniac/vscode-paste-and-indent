@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 
 
 let pasteAndIndent = () => {
+	let config = vscode.workspace.getConfiguration('pasteAndIndent');
     let editor = vscode.window.activeTextEditor;
     let start = editor.selection.anchor;
 	let offset = start.character;
@@ -27,8 +28,8 @@ let pasteAndIndent = () => {
 			}
 		});
 
-		if (!xmin || xmin === -1) {
-			return;
+		if (typeof xmin === 'undefined' || (xmin === -1 && linesToIndent.length <= 1)) {
+			return; // Skip indentation
 		}
 
 		linesToIndent = linesToIndent.map((line, index) => {
@@ -40,6 +41,9 @@ let pasteAndIndent = () => {
 		});
 		editor.edit((editBuilder: vscode.TextEditorEdit) => {
 			editBuilder.replace(selectionToIndent, linesToIndent.join('\n'));
+			if (linesToIndent.length > 1 && config.get('selectAfter', false)) {
+				editor.selection = new vscode.Selection(start.line + 1, 0, end.line, linesToIndent[linesToIndent.length - 1].length);
+			}
 		});
     });
 }
