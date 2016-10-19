@@ -9,7 +9,12 @@ let pasteAndIndent = () => {
     let start = editor.selection.anchor;
 	let offset = start.character;
 	let indentChar = editor.options.insertSpaces ? ' ' : '\t';
+	let startLine = editor.document.getText(new vscode.Selection(start.line, 0, start.line, start.character));
+	let startChar = startLine.search(/\S/);
 
+	if (startChar > -1) {
+		offset = startChar;
+	}
     vscode.commands.executeCommand('editor.action.clipboardPasteAction').then(() => {
         let end = editor.selection.anchor;
 		let selectionToIndent = new vscode.Selection(start.line, start.character, end.line, end.character);
@@ -34,7 +39,7 @@ let pasteAndIndent = () => {
 
 		linesToIndent = linesToIndent.map((line, index) => {
 			let x = leadingSpaces[index];
-			if (index === 0) { // Remove first lines' leading space
+			if (index === 0 && startChar === -1) { // Remove first lines' leading space
 				return line.replace(/^\s*/, '');
 			}
 			return line.replace(/^\s*/, indentChar.repeat(x - xmin + offset));
