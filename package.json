@@ -2,7 +2,7 @@
   "name": "vscode-paste-and-indent",
   "displayName": "Paste and Indent",
   "description": "Paste some code with \"correct\" indentation",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "Rubymaniac",
   "license": "MIT",
   "engines": {
