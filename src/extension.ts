@@ -19,26 +19,27 @@ let pasteAndIndent = () => {
         let end = editor.selection.anchor;
 		let selectionToIndent = new vscode.Selection(start.line, start.character, end.line, end.character);
 		let selectedText = editor.document.getText(selectionToIndent);
-		let leadingSpaces = []; // The amount of leading space the line has (after the first one)
-		let xmin = 0; // The minimum amount of leading space amongst the non-empty lines
+		let leadingSpaces = []; // The amount of leading space the line has
+		let xmin; // The minimum amount of leading space amongst the non-empty lines
 		let linesToIndent = selectedText.split('\n');
 
+		// Find out what is the minimum leading space of the non empty lines (xmin)
 		linesToIndent.forEach((line, index) => {
-			if (index === 0) return;
 			let _xmin = line.search(/\S/); // -1 means the line is blank (full of space characters)
-			leadingSpaces[index] = _xmin;
-			if (xmin > _xmin && _xmin !== -1) {
+			if (index > 0 && _xmin !== -1 && (typeof xmin === 'undefined' || xmin > _xmin)) {
 				xmin = _xmin;
 			}
+			leadingSpaces[index] = _xmin;
 		});
-		if (leadingSpaces.length === 0 || (xmin === 0 && offset === 0)) {
+		if (linesToIndent.length <= 1 || (xmin === 0 && offset === 0)) {
 			return; // Skip indentation
 		}
 		linesToIndent = linesToIndent.map((line, index) => {
-			if (index === 0 && startChar === -1) { // Remove first lines' leading space
-				return line.replace(/^\s*/, '');
+			let x = leadingSpaces[index];
+			if (x === -1) {
+				return line;
 			}
-			return line.replace(/^\s*/, indentChar.repeat(leadingSpaces[index] - xmin + offset));
+			return line.replace(/^\s*/, index === 0 ? '' : indentChar.repeat(x - xmin + offset));
 		});
 		editor.edit((editBuilder: vscode.TextEditorEdit) => {
 			editBuilder.replace(selectionToIndent, linesToIndent.join('\n'));
