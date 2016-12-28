@@ -30,9 +30,10 @@ This extension provides one command:
 pasteAndIndent.action
 ```
 
-which does all the work. Your job is to bind it to whatever key combination you like.
+which does all the work. Your job is to bind it to whatever key combination you like
+(note however that this command is **not** available via the Command Pallette `cmd+shift+p`).
 
-An example is (change default paste with paste and indent):
+An example is (change default *paste* with *paste and indent*):
 
 *keybindings.json*
 ```json
