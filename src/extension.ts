@@ -6,7 +6,7 @@ import * as vscode from 'vscode';
 let pasteAndIndent = () => {
     let config = vscode.workspace.getConfiguration('pasteAndIndent');
     let editor = vscode.window.activeTextEditor;
-    let start = editor.selection.anchor;
+    let start = editor.selection.start;
     let offset = start.character;
     let indentChar = editor.options.insertSpaces ? ' ' : '\t';
     let startLine = editor.document.getText(new vscode.Selection(start.line, 0, start.line, start.character));
@@ -16,7 +16,7 @@ let pasteAndIndent = () => {
         offset = startChar;
     }
     vscode.commands.executeCommand('editor.action.clipboardPasteAction').then(() => {
-        let end = editor.selection.anchor;
+        let end = editor.selection.end;
         let selectionToIndent = new vscode.Selection(start.line, start.character, end.line, end.character);
         let selectedText = editor.document.getText(selectionToIndent);
         let leadingSpaces = []; // The amount of leading space the line has
