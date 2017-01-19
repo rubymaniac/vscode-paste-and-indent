@@ -2,7 +2,7 @@
   "name": "vscode-paste-and-indent",
   "displayName": "Paste and Indent",
   "description": "Paste some code with \"correct\" indentation",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publisher": "Rubymaniac",
   "license": "MIT",
   "engines": {
@@ -31,20 +31,18 @@
     "onCommand:pasteAndIndent.action"
   ],
   "contributes": {
-      "configuration": {
-          "type": "object",
-          "title": "PasteAndIndent configuration",
-          "properties": {
-              "pasteAndIndent.selectAfter": {
-                  "type": "boolean",
-                  "default": false,
-                  "description": "After pasting and indenting selects the probably wrong indented region."
-              }
-          }
+    "configuration": {
+      "type": "object",
+      "title": "PasteAndIndent configuration",
+      "properties": {
+        "pasteAndIndent.selectAfter": {
+          "type": "boolean",
+          "default": false,
+          "description": "After pasting and indenting selects the probably wrong indented region."
+        }
       }
+    }
   },
   "main": "./out/src/extension",
-  "dependencies": {
-    "escape-string-regexp": "^1.0.5"
-  }
+  "dependencies": {}
 }
