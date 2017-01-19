@@ -30,6 +30,19 @@
   "activationEvents": [
     "onCommand:pasteAndIndent.action"
   ],
+  "contributes": {
+      "configuration": {
+          "type": "object",
+          "title": "PasteAndIndent configuration",
+          "properties": {
+              "pasteAndIndent.selectAfter": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "After pasting and indenting selects the probably wrong indented region."
+              }
+          }
+      }
+  },
   "main": "./out/src/extension",
   "dependencies": {
     "escape-string-regexp": "^1.0.5"

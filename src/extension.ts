@@ -32,13 +32,12 @@ let pasteAndIndent = () => {
             let numberOfTabs;
             if (_xmin !== -1) {
                 // Normalize the line according to the indentation preferences
-                if (editor.options.insertSpaces) {
+                if (editor.options.insertSpaces) { // When we are in SPACE mode
                     numberOfTabs = line.substring(0, _xmin).split(/\t/).length - 1;
                     _xmin += numberOfTabs * (Number(editor.options.tabSize) - 1);
-                } else {
-                    // BUG: This works only if the pasted code has the same tabSize with the document
-                    // TODO: Find a way to detect pasted code's tabSize and adjust accordingly
-                    _xmin = Math.floor(_xmin / Number(editor.options.tabSize));
+                } else { // When we are in TAB mode
+                    // Reduce _xmin by how many space characters are in the line
+                    _xmin -= (line.substring(0, _xmin).match(/[^\t]+/g) || []).length;
                 }
                 if (index > 0 && (typeof xmin === 'undefined' || xmin > _xmin)) {
                     xmin = _xmin;
